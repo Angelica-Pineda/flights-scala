@@ -1,5 +1,7 @@
 package org.ntic.flights.data
 
+import org.ntic.flights.FlightsLoaderConfig
+
 /**
  * This class is used to represent a flight with its information like the date, origin, destination, scheduled departure time,
  * scheduled arrival time, departure delay and arrival delay.
@@ -18,9 +20,9 @@ case class Flight(flDate: String,
                   scheduledDepTime: Time,
                   scheduledArrTime: Time,
                   depDelay: Double,
-                  arrDelay: Double) extends Ordered[Flight]  {
+                  arrDelay: Double) extends Ordered[Flight] {
 
-  // define flightDate como lazy e inmutable                }
+  // define flightDate como lazy e inmutable
   lazy val flightDate: FlightDate = FlightDate.fromString(flDate)
 
   // Convierte la hora a minutos, suma el retraso (como Int) y reconstruye el Time.
@@ -42,6 +44,8 @@ case class Flight(flDate: String,
   override def compare(that: Flight): Int =
     this.actualArrTime.compare(that.actualArrTime)
 
+
+}
 object Flight {
   /**
    * This function is used to create a Flight object from a string with the information of the flight separated by a

@@ -46,6 +46,14 @@ object Row {
     // Try.apply captura cualquier excepción que ocurra dentro (como NumberFormatException)
     // y la envuelve en un Failure. si va bien devuelve un Success.
     Try {
+      val depTimeStr = tokens(9).trim
+      val arrTimeStr = tokens(11).trim
+
+      // --- VALIDACIÓN PREVENTIVA ---
+      // Intentamos crear los objetos Time. Si fallan (ej. hora 99), lanzarán excepción
+      // y este Try devolverá un Failure. Así la fila se reportará como inválida sin romper la app.
+      Time.fromString(depTimeStr)
+      Time.fromString(arrTimeStr)
       // Usamos trim para limpiar espacios en blanco accidentales
       Row(
         flDate = tokens(0).trim,
@@ -57,9 +65,9 @@ object Row {
         dest = tokens(6).trim,
         destCityName = tokens(7).trim,
         destStateAbr = tokens(8).trim,
-        depTime = tokens(9).trim,
+        depTime = depTimeStr,
         depDelay = tokens(10).trim.toDouble,
-        arrTime = tokens(11).trim,
+        arrTime = arrTimeStr,
         arrDelay = tokens(12).trim.toDouble
       )
     }

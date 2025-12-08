@@ -30,7 +30,10 @@ object Time {
     val formatted: String = ("0000" + timeStr.trim).takeRight(4)
 
    /* extrae posiciones 0 y 1 para horas y convierte a int*/
-    val hours: Int = formatted.substring(0, 2).toInt
+    val rawHours: Int = formatted.substring(0, 2).toInt
+
+    //Si la hora es 24, la convertimos a 0. Si no, la dejamos igual.
+    val hours: Int = if (rawHours == 24) 0 else rawHours
 
     /*Extrae posiciones 2 y 3 para minutos y convierte a int*/
     val minutes: Int = formatted.substring(2, 4).toInt
