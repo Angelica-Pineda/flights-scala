@@ -54,7 +54,7 @@ object FileUtils {
       fileLines
     }
     // Iteramos sobre cada línea (map)
-    fileLines.map { line =>
+    dataLines.map { line =>
       // 1. Partimos la línea en trozos (tokens) usando el delimitador
       val tokens = line.split(FlightsLoaderConfig.delimiter, -1).toSeq
 
