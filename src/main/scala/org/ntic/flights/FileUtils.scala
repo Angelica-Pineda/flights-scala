@@ -13,14 +13,12 @@ object FileUtils {
    * @return Boolean: true if the line is invalid, false otherwise
    */
   def isInvalidLine(s: String): Boolean = {
-    // Usamos el delimitador definido en tu configuración
+
     val delimiter = FlightsLoaderConfig.delimiter
 
-    // El parámetro -1 en split es vital: evita que Scala descarte cadenas vacías al final de la línea
     val tokens = s.split(delimiter, -1)
 
-    // Es inválida si está vacía o si el número de tokens no coincide con las cabeceras
-    s.trim.isEmpty || tokens.length != FlightsLoaderConfig.headers.length || tokens.exists(_.trim.isEmpty)
+    s.trim.isEmpty || tokens.length != FlightsLoaderConfig.headersLength || tokens.exists(_.trim.isEmpty)
   }
 
   /**
@@ -30,13 +28,13 @@ object FileUtils {
    * @return List[String]
    */
   def getLinesFromFile(filePath: String): List[String] = {
-    // Abrimos el fichero
+
     val source = Source.fromFile(filePath)
     try {
-      // Leemos todas las líneas y las convertimos a una lista
+
       source.getLines().toList
     } finally {
-      // ¡Buenas prácticas! Siempre cerramos el recurso para no dejar ficheros abiertos en el SO
+
       source.close()
     }
   }
@@ -53,12 +51,10 @@ object FileUtils {
     } else {
       fileLines
     }
-    // Iteramos sobre cada línea (map)
+
     dataLines.map { line =>
-      // 1. Partimos la línea en trozos (tokens) usando el delimitador
       val tokens = line.split(FlightsLoaderConfig.delimiter, -1).toSeq
 
-      // 2. Delegamos la creación del objeto al Row.scala
       Row.fromStringList(tokens)
     }
   }

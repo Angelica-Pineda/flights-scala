@@ -13,7 +13,7 @@ case class Time(hours: Int, minutes: Int) extends Ordered[Time] {
     minus(that)
 
   override def compare(that: Time): Int =
-    this - that
+    this.asMinutes - that.asMinutes
 }
 
 object Time {
@@ -25,25 +25,24 @@ object Time {
    * @param timeStr: String
    * @return Time
    */
+
   def fromString(timeStr: String): Time = {
-    /*cadena con 4 caracteres (HHMM)*/
     val formatted: String = ("0000" + timeStr.trim).takeRight(4)
 
-   /* extrae posiciones 0 y 1 para horas y convierte a int*/
-    val hours: Int = formatted.substring(0, 2).toInt
+    val rawHours = formatted.substring(0, 2).toInt
+    val rawMinutes = formatted.substring(2, 4).toInt
 
-/*    //Si la hora es 24, la convertimos a 0. Si no, la dejamos igual.
-    val hours: Int = if (rawHours == 24) 0 else rawHours*/
+    val normalizedHours = rawHours % 24
 
-    /*Extrae posiciones 2 y 3 para minutos y convierte a int*/
-    val minutes: Int = formatted.substring(2, 4).toInt
+    val normalizedMinutes = rawMinutes % 60
 
-
-    Time(hours,minutes)
+    Time(normalizedHours, normalizedMinutes)
   }
 
   def fromMinutes(minutes: Int): Time = {
+
     val normalized = if (minutes < 0) 0 else minutes % totalMinutesInADay
+
     Time(normalized / 60, normalized % 60)
   }
 }

@@ -12,7 +12,7 @@ object FlightsLoaderConfig {
   val delimiter: String = config.getString("delimiter")
   val outputDir: String = config.getString("outputDir")
   val headers: List[String] = config.getStringList("headers").asScala.toList
-  val headersLength: Int = headers.length
+  val headersLength: Int = config.getInt("headersLength")
   val columnIndexMap: Map[String, Int] = headers.map(x => (x, headers.indexOf(x))).toMap
   val filteredOrigin: List[String] = config.getStringList("filteredOrigin").asScala.toList
 

@@ -19,7 +19,6 @@ lazy val root = (project in file("."))
     // clase principal para assembly
     assembly / mainClass := Some("org.ntic.flights.FlightsLoaderApp"),
 
-    //Nombre del jar
     assembly / assemblyJarName := "flights_loader.jar",
 
     libraryDependencies ++= Seq(

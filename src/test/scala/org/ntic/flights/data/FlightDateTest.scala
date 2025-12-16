@@ -16,7 +16,7 @@ class FlightDateTest extends AnyFlatSpec with Matchers {
 
   "A FlightDate" should "raise an Exception because of wrong string format" in {
     val dateStr = "7/1/2023/3 12:00:00 AM"
-    an [Exception] should be thrownBy FlightDate.fromString(dateStr)
+    an [InvalidFormatException] should be thrownBy FlightDate.fromString(dateStr)
   }
 
   "A FlightDate" should "print its value in corrected format: DD/MM/YYYY" in {

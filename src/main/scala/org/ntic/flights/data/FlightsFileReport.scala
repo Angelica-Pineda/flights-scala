@@ -18,13 +18,13 @@ case class FlightsFileReport(validRows: Seq[Row],
                         ) {
 
   override val toString: String = {
-    // Agrupar errores por identity
+
     val errorSummary = invalidRows
       .groupBy(identity)
       .map { case (errorMsg, list) => s"  <$errorMsg>: ${list.length}" }
       .mkString("\n")
 
-    // 2. Construimos el string final usando interpolación y multilínea (""")
+
     s"""
        |FlightsReport:
        |  - ${validRows.length} valid rows.
@@ -45,17 +45,16 @@ object FlightsFileReport {
    * @return FlightsFileReport
    */
   def fromRows(rows: Seq[Try[Row]]): FlightsFileReport = {
-    // 1. Extraemos las filas válidas (Success)
+    // filas válidas
     val validRows = rows.collect { case Success(row) => row }
 
-    // 2. Extraemos los errores (Failure) y los convertimos a String para el reporte
-    // Usamos e.toString para tener el tipo de excepción y el mensaje (ej: "java.lang.NumberFormatException: For input string: 'A'")
+    // filas invalidas para el reporte
     val invalidRows = rows.collect { case Failure(e) => e.toString }
 
-    // 3. Convertimos las filas válidas a objetos Flight usando el método fromRow que creamos antes
+    // Convierte las filas válidas a objetos Flight
     val flights = validRows.map(Flight.fromRow)
 
-    // 4. Devolvemos el objeto reporte
+    // Objeto Reporte
     FlightsFileReport(validRows, invalidRows, flights)
   }
 }
