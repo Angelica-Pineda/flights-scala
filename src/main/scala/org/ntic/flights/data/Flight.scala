@@ -22,24 +22,11 @@ case class Flight(flDate: String,
                   depDelay: Double,
                   arrDelay: Double) extends Ordered[Flight] {
 
-  // define flightDate como lazy e inmutable
+
   lazy val flightDate: FlightDate = FlightDate.fromString(flDate)
-
-  // Convierte la hora a minutos, suma el retraso (como Int) y reconstruye el Time.
   lazy val actualDepTime: Time = Time.fromMinutes(scheduledDepTime.asMinutes + depDelay.toInt)
-  //    scheduledDepTime y depDelay
-  //    Ten en cuenta que este campo debe representar la hora de salida real del vuelo, esto quiere decir que debe
-  //    tener en cuenta el retraso, el campo depDelay representa el retraso en minutos, puede ser negativo y es Double.
-  //    Pista: usa el méodo fromMinutes de Time
-
   lazy val actualArrTime: Time = Time.fromMinutes(scheduledArrTime.asMinutes + arrDelay.toInt)
-  //    scheduledArrTime y arrDelay.
-  //    Ten en cuenta que este campo debe representar la hora de llegada real del vuelo, esto quiere decir que debe
-  //    tener en cuenta el retraso, el campo arrDelay representa el retraso en minutos, puede ser negativo y es Double.
-  //    Pista: usa el méodo fromMinutes de Time
-
   val isDelayed: Boolean = depDelay != 0 || arrDelay != 0
-  //  Pista: un vuelo está retrasado si el campo depDelay o el campo arrDelay son distintos de 0
 
   override def compare(that: Flight): Int =
     this.actualArrTime.compare(that.actualArrTime)

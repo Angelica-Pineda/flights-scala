@@ -31,9 +31,7 @@ object Time {
 
     val rawHours = formatted.substring(0, 2).toInt
     val rawMinutes = formatted.substring(2, 4).toInt
-
     val normalizedHours = rawHours % 24
-
     val normalizedMinutes = rawMinutes % 60
 
     Time(normalizedHours, normalizedMinutes)

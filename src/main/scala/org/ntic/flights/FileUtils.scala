@@ -15,7 +15,6 @@ object FileUtils {
   def isInvalidLine(s: String): Boolean = {
 
     val delimiter = FlightsLoaderConfig.delimiter
-
     val tokens = s.split(delimiter, -1)
 
     s.trim.isEmpty || tokens.length != FlightsLoaderConfig.headersLength || tokens.exists(_.trim.isEmpty)
